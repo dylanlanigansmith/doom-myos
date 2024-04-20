@@ -6,3 +6,6 @@
 .vs/
 Debug/
 Release/
+*.WAD
+*.wad
+*.iwad

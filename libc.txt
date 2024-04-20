@@ -1,0 +1,43 @@
+string h
+easy
+
+
+stdlib 
+    easy
+
+math.h  
+easy
+
+
+inttypes
+ctype
+    is this just stdint
+
+stdio
+    printf can go to serial out
+    everything else we basically have
+
+limits
+    easy
+
+<fcntl.h>
+    -probs can just hand it a mmaped file and be done with it
+    wad_file_t *W_OpenFile(char *path) for ref
+
+
+
+stdarg
+    builtin
+
+
+verdict:
+not that bad
+i dont think they use malloc much bc of zone, why i chose doom besides the trope
+
+-other stuff:
+    sleep
+    ticks
+    
+    syscall for get file as mmap 
+    syscall for gimme frame buffer
+    
