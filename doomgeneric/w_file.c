@@ -26,7 +26,7 @@
 #include "w_file.h"
 
 extern wad_file_class_t stdc_wad_file;
-
+extern wad_file_class_t dls_wad_file;
 /*
 #ifdef _WIN32
 extern wad_file_class_t win32_wad_file;
@@ -47,7 +47,8 @@ static wad_file_class_t *wad_file_classes[] =
 #ifdef HAVE_MMAP
     &posix_wad_file,
 #endif
-    &stdc_wad_file,
+    &dls_wad_file
+   // &stdc_wad_file,
 };
 
 wad_file_t *W_OpenFile(char *path)
@@ -60,9 +61,9 @@ wad_file_t *W_OpenFile(char *path)
     // directly into memory.
     //
 
-    if (!M_CheckParm("-mmap"))
+    if  (1) //(!M_CheckParm("-mmap"))
     {
-        return stdc_wad_file.OpenFile(path);
+        return  dls_wad_file.OpenFile(path); //stdc_wad_file.OpenFile(path);
     }
 
     // Try all classes in order until we find one that works

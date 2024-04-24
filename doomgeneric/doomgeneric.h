@@ -13,6 +13,8 @@ void doomgeneric_Create(int argc, char **argv);
 void doomgeneric_Tick();
 
 
+#define WADMAP_LEN 12408292
+extern void* mmwad;
 //Implement below functions for your platform
 void DG_Init();
 void DG_DrawFrame();

@@ -1891,7 +1891,7 @@ void M_LoadDefaults (void)
     // Load main configuration from the specified file, instead of the
     // default.
     //
-
+/*
     i = M_CheckParmWithArgs("-config", 1);
 
     if (i)
@@ -1927,7 +1927,7 @@ void M_LoadDefaults (void)
         extra_defaults.filename
             = M_StringJoin(configdir, default_extra_config, NULL);
     }
-
+    */
     LoadDefaultCollection(&doom_defaults);
     LoadDefaultCollection(&extra_defaults);
 }

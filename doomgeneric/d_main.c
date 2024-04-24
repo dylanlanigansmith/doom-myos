@@ -346,7 +346,7 @@ void D_BindVariables(void)
     M_BindWeaponControls();
     M_BindMapControls();
     M_BindMenuControls();
-    M_BindChatControls(MAXPLAYERS);
+    //M_BindChatControls(MAXPLAYERS);
 
     key_multi_msgplayer[0] = HUSTR_KEYGREEN;
     key_multi_msgplayer[1] = HUSTR_KEYINDIGO;
@@ -370,13 +370,13 @@ void D_BindVariables(void)
 
     // Multiplayer chat macros
 
-    for (i=0; i<10; ++i)
-    {
-        char buf[12];
+   // for (i=0; i<10; ++i)
+   // {
+   //     char buf[12];
 
-        M_snprintf(buf, sizeof(buf), "chatmacro%i", i);
-        M_BindVariable(buf, &chat_macros[i]);
-    }
+   //     M_snprintf(buf, sizeof(buf), "chatmacro%i", i);
+   //     M_BindVariable(buf, &chat_macros[i]);
+   // }
 }
 
 //
@@ -1090,7 +1090,7 @@ static void D_Endoom(void)
 //
 // D_DoomMain
 //
-void D_DoomMain (void)
+void D_DoomMain (void* wad)
 {
     int p;
     char file[256];
@@ -1099,7 +1099,7 @@ void D_DoomMain (void)
     int numiwadlumps;
 #endif
 
-    I_AtExit(D_Endoom, false);
+    //I_AtExit(D_Endoom, false);
 
     // print banner
 
@@ -1119,7 +1119,7 @@ void D_DoomMain (void)
      devparm = fastparm = respawnparm = nomonsters = 0;
 
   
-    I_DisplayFPSDots(devparm);
+    //I_DisplayFPSDots(devparm);
 
     
 	deathmatch = 0;
@@ -1167,11 +1167,12 @@ void D_DoomMain (void)
     // Load configuration files before initialising other subsystems.
     DEH_printf("M_LoadDefaults: Load system defaults.\n");
     M_SetConfigFilenames("default.cfg", PROGRAM_PREFIX "doom.cfg");
+     DEH_printf("M_LoadDefaults: Binding Variables\n");
     D_BindVariables();
     M_LoadDefaults();
-
+    DEH_printf("M_LoadDefaults: Loaded\n");
     // Save configuration at exit.
-    I_AtExit(M_SaveDefaults, false);
+    //I_AtExit(M_SaveDefaults, false);
 
     // Find main IWAD file and load it.
     iwadfile = "DOOM.iwad";

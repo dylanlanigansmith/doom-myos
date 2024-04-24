@@ -85,7 +85,7 @@
 #define PACKAGE_VERSION 0.1
 
 /* Change this when you create your awesome forked version */
-#define PROGRAM_PREFIX "doomgeneric"
+#define PROGRAM_PREFIX "doomos"
 
 /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1
