@@ -47,8 +47,9 @@ OBJS += $(addprefix $(OBJDIR)/, $(SRC_DOOM))
 
 all:	 $(OUTPUT)
 
-install:
+install: all
 	cp $(OUTPUT) /home/dylan/code/randos/util/initrd/root/usr/bin
+	cp $(OUTPUT) /home/dylan/code/randos/dbg
 
 clean:
 	rm -rf $(OBJDIR)

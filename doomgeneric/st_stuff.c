@@ -1085,11 +1085,15 @@ static void ST_loadUnloadGraphics(load_callback_t callback)
     // Load the numbers, tall and short
     for (i=0;i<10;i++)
     {
-	DEH_snprintf(namebuf, 9, "STTNUM%d", i);
+	    DEH_snprintf(namebuf, 9, "STTNUM%d", i);
         callback(namebuf, &tallnum[i]);
 
-	DEH_snprintf(namebuf, 9, "STYSNUM%d", i);
+       
+
+	    DEH_snprintf(namebuf, 9, "STYSNUM%d", i);
         callback(namebuf, &shortnum[i]);
+
+       
     }
 
     // Load percent key.
@@ -1157,6 +1161,8 @@ static void ST_loadUnloadGraphics(load_callback_t callback)
     ++facenum;
     callback(DEH_String("STFDEAD0"), &faces[facenum]);
     ++facenum;
+
+    printf("StUnloadLoadGFX end\n");
 }
 
 static void ST_loadCallback(char *lumpname, patch_t **variable)

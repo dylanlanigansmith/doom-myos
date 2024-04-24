@@ -489,10 +489,12 @@ void R_InitTextures (void)
     nummappatches = LONG ( *((int *)names) );
     name_p = names + 4;
     patchlookup = Z_Malloc(nummappatches*sizeof(*patchlookup), PU_STATIC, NULL);
-
+    printf("we have %i appatches\n", nummappatches);
     for (i = 0; i < nummappatches; i++)
     {
+       //something weird re caps
         M_StringCopy(name, name_p + i * 8, sizeof(name));
+        
         patchlookup[i] = W_CheckNumForName(name);
     }
     W_ReleaseLumpName(DEH_String("PNAMES"));
@@ -703,11 +705,11 @@ void R_InitColormaps (void)
 void R_InitData (void)
 {
     R_InitTextures ();
-    printf (".");
+    printf ("textures [ok]");
     R_InitFlats ();
-    printf (".");
+    printf ("flats [ok]");
     R_InitSpriteLumps ();
-    printf (".");
+    printf ("sprites [ok]");
     R_InitColormaps ();
 }
 

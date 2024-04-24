@@ -348,13 +348,19 @@ void I_BindJoystickVariables(void)
     M_BindVariable("joystick_x_invert",     &joystick_x_invert);
     M_BindVariable("joystick_y_invert",     &joystick_y_invert);
     M_BindVariable("joystick_strafe_invert",&joystick_strafe_invert);
-    return;
-    /*
-    for (i = 0; i < NUM_VIRTUAL_BUTTONS; ++i)
-    {
-        char name[32];
-        M_snprintf(name, sizeof(name), "joystick_physical_button%i", i);
-        M_BindVariable(name, &joystick_physical_buttons[i]);
-    }*/
+  
+    
+   // NUM_VIRTUAL_BUTTONS
+    M_BindVariable("joystick_physical_button0", &joystick_physical_buttons[0]);
+    M_BindVariable("joystick_physical_button1", &joystick_physical_buttons[1]);
+    M_BindVariable("joystick_physical_button2", &joystick_physical_buttons[2]);
+    M_BindVariable("joystick_physical_button3", &joystick_physical_buttons[3]);
+    M_BindVariable("joystick_physical_button4", &joystick_physical_buttons[4]);
+    M_BindVariable("joystick_physical_button5", &joystick_physical_buttons[5]);
+    M_BindVariable("joystick_physical_button6", &joystick_physical_buttons[6]);
+    M_BindVariable("joystick_physical_button7", &joystick_physical_buttons[7]);
+
+    M_BindVariable("joystick_physical_button8", &joystick_physical_buttons[8]);
+    M_BindVariable("joystick_physical_button9", &joystick_physical_buttons[9]);
 }
 

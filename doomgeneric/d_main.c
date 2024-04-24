@@ -335,18 +335,18 @@ void D_Display (void)
 void D_BindVariables(void)
 {
     int i;
-
+    
     M_ApplyPlatformDefaults();
 
-    I_BindVideoVariables();
+    I_BindVideoVariables(); //print("bound video\n");
     I_BindJoystickVariables();
     I_BindSoundVariables();
 
-    M_BindBaseControls();
+    M_BindBaseControls(); //print("bound joy\n");
     M_BindWeaponControls();
-    M_BindMapControls();
+    M_BindMapControls(); //print("bound map\n");
     M_BindMenuControls();
-    //M_BindChatControls(MAXPLAYERS);
+    M_BindChatControls(MAXPLAYERS);
 
     key_multi_msgplayer[0] = HUSTR_KEYGREEN;
     key_multi_msgplayer[1] = HUSTR_KEYINDIGO;
@@ -356,7 +356,7 @@ void D_BindVariables(void)
 #ifdef FEATURE_MULTIPLAYER
     NET_BindVariables();
 #endif
-
+   
     M_BindVariable("mouse_sensitivity",      &mouseSensitivity);
     M_BindVariable("sfx_volume",             &sfxVolume);
     M_BindVariable("music_volume",           &musicVolume);
@@ -369,14 +369,16 @@ void D_BindVariables(void)
     M_BindVariable("show_endoom",            &show_endoom);
 
     // Multiplayer chat macros
+   
+    for (i=0; i<10; ++i)
+   {
+     char buf[12];
 
-   // for (i=0; i<10; ++i)
-   // {
-   //     char buf[12];
+       M_snprintf(buf, sizeof(buf), "chatmacro%i", i);
+     M_BindVariable(buf, &chat_macros[i]);
+    }
 
-   //     M_snprintf(buf, sizeof(buf), "chatmacro%i", i);
-   //     M_BindVariable(buf, &chat_macros[i]);
-   // }
+    print("Bound Variables\n");
 }
 
 //
@@ -423,6 +425,8 @@ void doomgeneric_Tick()
 //
 void D_DoomLoop (void)
 {
+
+    
     if (bfgedition &&
         (demorecording || (gameaction == ga_playdemo) || netgame))
     {
@@ -436,7 +440,7 @@ void D_DoomLoop (void)
     	G_BeginRecording ();
 
     main_loop_started = true;
-
+    print("trt \n");
     TryRunTics();
 
     I_SetWindowTitle(gamedescription);
@@ -1354,7 +1358,7 @@ void D_DoomMain (void* wad)
     printf ("NET_Init: Init network subsystem.\n");
     NET_Init ();
 #endif
-
+    DEH_printf("D_ConnectNetGame() \n");
     // Initial netgame startup. Connect to server etc.
     D_ConnectNetGame();
 
@@ -1480,7 +1484,7 @@ void D_DoomMain (void* wad)
     //
     // Load the game in slot s.
     //
-
+    printf("Almost past setup\n");
     p = M_CheckParmWithArgs("-loadgame", 1);
     
     if (p)
@@ -1496,7 +1500,7 @@ void D_DoomMain (void* wad)
     DEH_printf("M_Init: Init miscellaneous info.\n");
     M_Init ();
 
-    DEH_printf("R_Init: Init DOOM refresh daemon - ");
+    DEH_printf("R_Init: Init DOOM refresh daemon !!!! ");
     R_Init ();
 
     DEH_printf("\nP_Init: Init Playloop state.\n");
@@ -1520,8 +1524,8 @@ void D_DoomMain (void* wad)
     // Moved this here so that MAP01 isn't constantly looked up
     // in the main loop.
 
-    if (gamemode == commercial && W_CheckNumForName("map01") < 0)
-        storedemo = true;
+   // if (gamemode == commercial && W_CheckNumForName("map01") < 0)
+    storedemo = false;
 
     if (M_CheckParmWithArgs("-statdump", 1))
     {
@@ -1561,7 +1565,7 @@ void D_DoomMain (void* wad)
 		D_DoomLoop ();
         return;
     }
-
+   // printf("\nshould startloadgame=%i \n", startloadgame);
     if (startloadgame >= 0)
     {
         M_StringCopy(file, P_SaveGameFile(startloadgame), sizeof(file));
@@ -1575,6 +1579,10 @@ void D_DoomMain (void* wad)
 		else
 			D_StartTitle ();                // start up intro loop
     }
+
+    printf("\n Doom Loaded! \n");
+
+   // yield();
 
     D_DoomLoop ();
 }

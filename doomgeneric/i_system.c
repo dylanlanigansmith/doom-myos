@@ -73,6 +73,8 @@ static atexit_listentry_t *exit_funcs = NULL;
 
 void I_AtExit(atexit_func_t func, boolean run_on_error)
 {
+
+    /*
     atexit_listentry_t *entry;
 
     entry = malloc(sizeof(*entry));
@@ -80,7 +82,7 @@ void I_AtExit(atexit_func_t func, boolean run_on_error)
     entry->func = func;
     entry->run_on_error = run_on_error;
     entry->next = exit_funcs;
-    exit_funcs = entry;
+    exit_funcs = entry;*/
 }
 
 // Tactile feedback function, probably used for the Logitech Cyberman
@@ -359,6 +361,7 @@ static boolean already_quitting = false;
 
 void I_Error (char *error, ...)
 {
+    print("Error! \n");
     char msgbuf[512];
     va_list argptr;
     atexit_listentry_t *entry;
@@ -379,16 +382,18 @@ void I_Error (char *error, ...)
     // Message first.
     va_start(argptr, error);
     //fprintf(stderr, "\nError: ");
-    vfprintf(stderr, error, argptr);
-    fprintf(stderr, "\n\n");
+
+    vprintf(error, argptr);
+    //vfprintf(stderr, error, argptr);
+    //fprintf(stderr, "\n\n");
     va_end(argptr);
     fflush(stderr);
 
     // Write a copy of the message into buffer.
-    va_start(argptr, error);
-    memset(msgbuf, 0, sizeof(msgbuf));
-    M_vsnprintf(msgbuf, sizeof(msgbuf), error, argptr);
-    va_end(argptr);
+   // va_start(argptr, error);
+   // memset(msgbuf, 0, sizeof(msgbuf));
+   // M_vsnprintf(msgbuf, sizeof(msgbuf), error, argptr);
+   // va_end(argptr);
 
     // Shutdown. Here might be other errors.
 
@@ -451,7 +456,7 @@ void I_Error (char *error, ...)
     }
 #else
     {
-        ZenityErrorBox(msgbuf);
+       // ZenityErrorBox(msgbuf);
     }
 #endif
 
@@ -461,9 +466,7 @@ void I_Error (char *error, ...)
 
     exit(-1);
 #else
-    while (true)
-    {
-    }
+    exit(1);
 #endif
 }
 

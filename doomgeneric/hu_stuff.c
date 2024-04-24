@@ -282,22 +282,38 @@ char *mapnames_commercial[] =
     THUSTR_31,
     THUSTR_32
 };
-
+static_assert(HU_FONTSTART > 9);
+static_assert(HU_FONTEND < 100);
 void HU_Init(void)
 {
 
     int		i;
     int		j;
     char	buffer[9];
-
+  
     // load the heads-up font
-    j = HU_FONTSTART;
+    j = HU_FONTSTART; //33 -> 95
+
+    
+     printf(" loading hud font... ");
     for (i=0;i<HU_FONTSIZE;i++)
-    {
-	DEH_snprintf(buffer, 9, "STCFN%.3d", j++);
-	hu_font[i] = (patch_t *) W_CacheLumpName(buffer, PU_STATIC);
+    {   
+       
+       
+	    DEH_snprintf(buffer, 9, "STCFN0%i", j++);
+      
+        //DEH_snprintf(buffer, 9, "STCFN%.3d", j++);
+        // printf("[%s] ", buffer);
+
+       
+        
+        
+	    hu_font[i] = (patch_t *) W_CacheLumpName(buffer, PU_STATIC);
+
+       // buffer[5] =buffer[6] = buffer[7] = buffer[8] = 0;
     }
 
+    printf("init HUD okay!\n");
 }
 
 void HU_Stop(void)

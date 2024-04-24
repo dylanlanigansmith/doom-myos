@@ -24,7 +24,7 @@ static wad_file_t *W_dls_OpenFile(char *path)
 
     result = Z_Malloc(sizeof(dls_wad_file_t), PU_STATIC, 0);
     result->wad.file_class = &dls_wad_file;
-    result->wad.mapped = 1;
+    result->wad.mapped = mmwad;
     result->wad.length = WADMAP_LEN; //dunno
     result->ptr = mmwad;
     printf("opened our wad 'file' %lx",(uintptr_t)result->ptr);
@@ -54,12 +54,12 @@ size_t W_dls_Read(wad_file_t *wad, unsigned int offset,
 
     // Jump to the specified position in the file.
 
-    
+    printf("reading from %i (size %li)", offset, buffer_len);
 
     uintptr_t addr = (uintptr_t)(dls_wad->ptr) + (uintptr_t)(offset) ;
 
     size_t end = (uintptr_t)(dls_wad->ptr) + (uintptr_t)(dls_wad->wad.length) ;
-    size_t red = (addr + buffer_len) > dls_wad->wad.length ? (end - addr) : buffer_len;
+    size_t red = (addr + buffer_len) > end ? (end - addr) : buffer_len;
     memcpy(buffer, (void*)addr, red);
     // Read into the buffer.
 

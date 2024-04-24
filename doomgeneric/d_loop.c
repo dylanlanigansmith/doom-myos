@@ -446,6 +446,8 @@ void D_StartNetGame(net_gamesettings_t *settings,
 
 	ticdup = settings->ticdup;
 	new_sync = settings->new_sync;
+
+    printf(" ... StartNetGame(%i)... ", ticdup);
 #endif
 }
 
@@ -720,9 +722,10 @@ void TryRunTics (void)
 
     // in singletics mode, run a single tic every time this function
     // is called.
-
-    if (singletics)
+   
+    if (singletics) //its not
     {
+        print("allthesingletics");
         BuildNewTic();
     }
     else
@@ -735,7 +738,7 @@ void TryRunTics (void)
     availabletics = lowtic - gametic/ticdup;
 
     // decide how many tics to run
-
+    
     if (new_sync)
     {
 	counts = availabletics;
@@ -763,25 +766,25 @@ void TryRunTics (void)
 	counts = 1;
 
     // wait for new tics if needed
-
+    
     while (!PlayersInGame() || lowtic < gametic/ticdup + counts)
     {
-	NetUpdate ();
+        NetUpdate ();
 
-        lowtic = GetLowTic();
+            lowtic = GetLowTic();
 
-	if (lowtic < gametic/ticdup)
-	    I_Error ("TryRunTics: lowtic < gametic");
+        if (lowtic < gametic/ticdup)
+            I_Error ("TryRunTics: lowtic < gametic");
 
-        // Don't stay in this loop forever.  The menu is still running,
-        // so return to update the screen
+            // Don't stay in this loop forever.  The menu is still running,
+            // so return to update the screen
 
-	if (I_GetTime() / ticdup - entertic > 0)
-	{
-	    return;
-	}
-
-        I_Sleep(1);
+        if (I_GetTime() / ticdup - entertic > 0)
+        {
+            return;
+        }
+            
+            I_Sleep(1);
     }
 
     // run the count * ticdup dics

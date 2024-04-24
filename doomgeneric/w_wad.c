@@ -197,7 +197,7 @@ wad_file_t *W_AddFile (char *filename)
 
 			// ???modifiedgame = true;
 		}
-
+        printf("We got an IWAD !");
 		header.numlumps = LONG(header.numlumps);
 		header.infotableofs = LONG(header.infotableofs);
 		length = header.numlumps*sizeof(filelump_t);
@@ -261,6 +261,19 @@ int W_CheckNumForName (char* name)
     int i;
 
     // Do we have a hash table yet?
+    if(!strncasecmp(name, "PLAYPAL", 8)){
+        printf("manual override for %s\n", name);
+        for (i=numlumps-1; i >= 0; --i)
+        {
+            if (!strncasecmp(lumpinfo[i].name, name, 8))
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
 
     if (lumphash != NULL)
     {
@@ -275,7 +288,7 @@ int W_CheckNumForName (char* name)
             if (!strncasecmp(lump_p->name, name, 8))
             {
                 return lump_p - lumpinfo;
-            }
+            } 
         }
     } 
     else
@@ -283,7 +296,7 @@ int W_CheckNumForName (char* name)
         // We don't have a hash table generate yet. Linear search :-(
         // 
         // scan backwards so patch lump files take precedence
-
+        printf(" [fbNm %s ] ", name);
         for (i=numlumps-1; i >= 0; --i)
         {
             if (!strncasecmp(lumpinfo[i].name, name, 8))
@@ -294,10 +307,64 @@ int W_CheckNumForName (char* name)
     }
 
     // TFB. Not found.
-
+   //  printf("CheckNumForName( %s ) Not Found", name);
     return -1;
 }
+int W_NEEDNumForName (char* name)
+{
+    lumpinfo_t *lump_p;
+    int i;
 
+    // Do we have a hash table yet?
+    if(!strncasecmp(name, "PLAYPAL", 8)){
+        printf("manual override for %s\n", name);
+        for (i=numlumps-1; i >= 0; --i)
+        {
+            if (!strncasecmp(lumpinfo[i].name, name, 8))
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+
+    if (lumphash != NULL)
+    {
+        int hash;
+        
+        // We do! Excellent.
+
+        hash = W_LumpNameHash(name) % numlumps;
+        
+        for (lump_p = lumphash[hash]; lump_p != NULL; lump_p = lump_p->next)
+        {
+            if (!strncasecmp(lump_p->name, name, 8))
+            {
+                return lump_p - lumpinfo;
+            } 
+        }
+    } 
+    //else
+    //{
+        // We don't have a hash table generate yet. Linear search :-(
+        // 
+        // scan backwards so patch lump files take precedence
+        printf(" [fbNm %s ] ", name);
+        for (i=numlumps-1; i >= 0; --i)
+        {
+            if (!strncasecmp(lumpinfo[i].name, name, 8))
+            {
+                return i;
+            }
+        }
+   // }
+
+    // TFB. Not found.
+   //  printf("CheckNumForName( %s ) Not Found", name);
+    return -1;
+}
 
 
 
@@ -309,7 +376,7 @@ int W_GetNumForName (char* name)
 {
     int	i;
 
-    i = W_CheckNumForName (name);
+    i = W_NEEDNumForName (name);
 
     if (i < 0)
     {

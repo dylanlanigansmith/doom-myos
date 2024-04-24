@@ -497,6 +497,8 @@ int M_vsnprintf(char *buf, size_t buf_len, const char *s, va_list args)
 }
 
 // Safe, portable snprintf().
+
+/* //not anymore sucka
 int M_snprintf(char *buf, size_t buf_len, const char *s, ...)
 {
     va_list args;
@@ -505,7 +507,7 @@ int M_snprintf(char *buf, size_t buf_len, const char *s, ...)
     result = M_vsnprintf(buf, buf_len, s, args);
     va_end(args);
     return result;
-}
+}*/
 
 #ifdef _WIN32
 

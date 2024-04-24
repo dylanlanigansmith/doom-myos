@@ -200,8 +200,8 @@ static void InitConnectData(net_connect_data_t *connect_data)
                              && M_CheckParm("-longtics") == 0;
 
     // Read checksums of our WAD directory and dehacked information
-
-    W_Checksum(connect_data->wad_sha1sum);
+    print("Skipping Checksum \n");
+    //W_Checksum(connect_data->wad_sha1sum);
 
 #if ORIGCODE
     DEH_Checksum(connect_data->deh_sha1sum);
@@ -217,6 +217,7 @@ void D_ConnectNetGame(void)
     net_connect_data_t connect_data;
 
     InitConnectData(&connect_data);
+    printf("InitConnectData(OK)\n");
     netgame = D_InitNetGame(&connect_data);
 
     //!
@@ -239,9 +240,10 @@ void D_ConnectNetGame(void)
 //
 void D_CheckNetGame (void)
 {
+    
     net_gamesettings_t settings;
 
-    if (netgame)
+    if (netgame && 0)
     {
         autostart = true;
     }
@@ -251,7 +253,7 @@ void D_CheckNetGame (void)
     SaveGameSettings(&settings);
     D_StartNetGame(&settings, NULL);
     LoadGameSettings(&settings);
-
+    /*
     DEH_printf("startskill %i  deathmatch: %i  startmap: %i  startepisode: %i\n",
                startskill, deathmatch, startmap, startepisode);
 
@@ -276,6 +278,6 @@ void D_CheckNetGame (void)
                 printf("s");
             printf(".\n");
         }
-    }
+    }*/
 }
 

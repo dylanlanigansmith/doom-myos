@@ -20,6 +20,7 @@
 #ifndef __M_MISC__
 #define __M_MISC__
 #include "inc.h"
+
 //#include <stdio.h>
 //#include <stdarg.h>
 
@@ -44,6 +45,8 @@ char *M_StringJoin(const char *s, ...);
 boolean M_StringStartsWith(const char *s, const char *prefix);
 boolean M_StringEndsWith(const char *s, const char *suffix);
 int M_vsnprintf(char *buf, size_t buf_len, const char *s, va_list args);
+
+#define M_snprintf(b, l, s, ...) snprintf(b,l,s, __VA_ARGS__)
 int M_snprintf(char *buf, size_t buf_len, const char *s, ...);
 char *M_OEMToUTF8(const char *ansi);
 
