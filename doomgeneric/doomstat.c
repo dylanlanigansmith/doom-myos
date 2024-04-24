@@ -15,8 +15,8 @@
 // DESCRIPTION:
 //	Put all global tate variables here.
 //
-
-#include <stdio.h>
+#include "inc.h"
+//#include <stdio.h>
 
 #include "doomstat.h"
 

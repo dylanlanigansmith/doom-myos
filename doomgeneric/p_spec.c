@@ -20,8 +20,8 @@
 //	Line Tag handling. Line and Sector triggers.
 //
 
-
-#include <stdlib.h>
+#include "inc.h"
+//#include <stdlib.h>
 
 #include "doomdef.h"
 #include "doomstat.h"

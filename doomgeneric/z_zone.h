@@ -23,8 +23,8 @@
 
 #ifndef __Z_ZONE__
 #define __Z_ZONE__
-
-#include <stdio.h>
+#include "inc.h"
+//#include <stdio.h>
 
 //
 // ZONE MEMORY

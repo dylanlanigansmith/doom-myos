@@ -21,7 +21,7 @@
 #define __D_MAIN__
 
 #include "doomdef.h"
-
+#include "inc.h"
 
 
 

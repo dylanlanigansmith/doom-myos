@@ -21,9 +21,9 @@
 
 
 
-
-#include <stdlib.h>
-#include <math.h>
+#include "inc.h"
+//#include <stdlib.h>
+//#include <math.h>
 
 
 #include "doomdef.h"

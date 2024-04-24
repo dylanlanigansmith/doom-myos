@@ -16,9 +16,9 @@
 //	Movement, collision handling.
 //	Shooting and aiming.
 //
-
-#include <stdio.h>
-#include <stdlib.h>
+#include "inc.h"
+//#include <stdio.h>
+//#include <stdlib.h>
 
 #include "deh_misc.h"
 

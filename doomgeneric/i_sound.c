@@ -14,9 +14,9 @@
 //
 // DESCRIPTION:  none
 //
-
-#include <stdio.h>
-#include <stdlib.h>
+#include "inc.h"
+//#include <stdio.h>
+//#include <stdlib.h>
 
 #ifdef FEATURE_SOUND
 #include <SDL_mixer.h>

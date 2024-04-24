@@ -16,8 +16,8 @@
 //	Preparation of data for rendering,
 //	generation of lookups, caching, retrieval by name.
 //
-
-#include <stdio.h>
+#include "inc.h"
+//#include <stdio.h>
 
 #include "deh_main.h"
 #include "i_swap.h"

@@ -15,9 +15,9 @@
 // DESCRIPTION:
 //     Main loop code.
 //
-
-#include <stdlib.h>
-#include <string.h>
+#include "inc.h"
+//#include <stdlib.h>
+//#include <string.h>
 
 #include "doomfeatures.h"
 

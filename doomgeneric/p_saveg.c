@@ -16,9 +16,9 @@
 //	Archiving: SaveGame I/O.
 //
 
-
-#include <stdio.h>
-#include <stdlib.h>
+#include "inc.h"
+//#include <stdio.h>
+//#include <stdlib.h>
 
 #include "dstrings.h"
 #include "deh_main.h"

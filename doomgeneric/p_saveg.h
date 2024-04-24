@@ -19,8 +19,8 @@
 
 #ifndef __P_SAVEG__
 #define __P_SAVEG__
-
-#include <stdio.h>
+#include "inc.h"
+//#include <stdio.h>
 
 // maximum size of a savegame description
 

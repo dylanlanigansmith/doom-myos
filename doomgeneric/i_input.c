@@ -13,13 +13,13 @@
 // GNU General Public License for more details.
 //
 
-
-#include <stdlib.h>
-#include <ctype.h>
-#include <math.h>
-#include <string.h>
-#include <fcntl.h>
-#include <stdio.h>
+#include "inc.h"
+//#include <stdlib.h>
+//#include <ctype.h>
+//#include <math.h>
+//#include <string.h>
+//#include <fcntl.h>
+//#include <stdio.h>
 
 #include "config.h"
 #include "deh_str.h"

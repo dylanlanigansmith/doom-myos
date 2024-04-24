@@ -16,10 +16,10 @@
 //
 
 
-
-#include <string.h>
-#include <stdlib.h>
-#include <math.h>
+#include "inc.h"
+//#include <string.h>
+//#include <stdlib.h>
+//#include <math.h>
 
 #include "doomdef.h" 
 #include "doomkeys.h"

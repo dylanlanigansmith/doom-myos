@@ -16,8 +16,8 @@
 //	DOOM Network game communication and protocol,
 //	all OS independend parts.
 //
-
-#include <stdlib.h>
+#include "inc.h"
+//#include <stdlib.h>
 
 #include "doomfeatures.h"
 

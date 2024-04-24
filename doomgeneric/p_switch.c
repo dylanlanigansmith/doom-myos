@@ -16,8 +16,8 @@
 // DESCRIPTION:
 //	Switches, buttons. Two-state animation. Exits.
 //
-
-#include <stdio.h>
+#include "inc.h"
+//#include <stdio.h>
 
 #include "i_system.h"
 #include "deh_main.h"

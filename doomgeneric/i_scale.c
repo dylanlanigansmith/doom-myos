@@ -17,10 +17,10 @@
 //         1x,2x,3x,4x pixel doubling
 //         Aspect ratio-correcting stretch functions
 //
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "inc.h"
+//#include <stdio.h>
+//#include <stdlib.h>
+//#include <string.h>
 
 #include "doomtype.h"
 

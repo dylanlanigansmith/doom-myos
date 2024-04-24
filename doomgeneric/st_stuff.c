@@ -19,8 +19,8 @@
 //
 
 
-
-#include <stdio.h>
+#include "inc.h"
+//#include <stdio.h>
 
 #include "i_system.h"
 #include "i_video.h"

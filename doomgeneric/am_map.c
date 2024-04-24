@@ -17,8 +17,8 @@
 //
 
 
-#include <stdio.h>
-
+//#include <stdio.h>
+#include "inc.h"
 #include "deh_main.h"
 
 #include "z_zone.h"

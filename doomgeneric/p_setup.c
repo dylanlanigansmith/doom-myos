@@ -18,8 +18,8 @@
 //
 
 
-
-#include <math.h>
+#include "inc.h"
+//#include <math.h>
 
 #include "z_zone.h"
 

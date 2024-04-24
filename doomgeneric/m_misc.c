@@ -18,23 +18,15 @@
 //
 
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-#include <errno.h>
+//#include <stdio.h>
+//#include <stdlib.h>
+//#include <string.h>
+//#include <ctype.h>
+//#include <errno.h>
 
-#ifdef _WIN32
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
-#include <io.h>
-#ifdef _MSC_VER
-#include <direct.h>
-#endif
-#else
-#include <sys/stat.h>
-#include <sys/types.h>
-#endif
+
+#include "inc.h"
+
 
 #include "doomtype.h"
 

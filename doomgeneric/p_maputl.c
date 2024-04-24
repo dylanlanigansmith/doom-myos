@@ -21,8 +21,8 @@
 //
 
 
-
-#include <stdlib.h>
+#include "inc.h"
+//#include <stdlib.h>
 
 
 #include "m_bbox.h"

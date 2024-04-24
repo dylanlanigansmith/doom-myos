@@ -18,9 +18,9 @@
 
 
 
-
-#include <stdio.h>
-#include <stdlib.h>
+#include "inc.h"
+//#include <stdio.h>
+//#include <stdlib.h>
 
 
 #include "deh_main.h"

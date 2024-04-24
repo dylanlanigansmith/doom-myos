@@ -17,8 +17,8 @@
 //	Kept as a sample, DOOM2 sounds.
 //
 
-
-#include <stdlib.h>
+#include "inc.h"
+//#include <stdlib.h>
 
 
 #include "doomtype.h"

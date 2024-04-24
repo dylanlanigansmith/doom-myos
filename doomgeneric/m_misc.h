@@ -19,9 +19,9 @@
 
 #ifndef __M_MISC__
 #define __M_MISC__
-
-#include <stdio.h>
-#include <stdarg.h>
+#include "inc.h"
+//#include <stdio.h>
+//#include <stdarg.h>
 
 #include "doomtype.h"
 

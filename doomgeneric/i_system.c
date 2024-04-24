@@ -17,17 +17,18 @@
 
 
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+//#include <stdlib.h>
+//#include <stdio.h>
+//#include <string.h>
 
 #include <stdarg.h>
+#include "inc.h"
 
 #ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #else
-#include <unistd.h>
+#include "inc.h"
 #endif
 
 #ifdef ORIGCODE
@@ -271,7 +272,7 @@ void I_Quit (void)
 
 static int ZenityAvailable(void)
 {
-    return system(ZENITY_BINARY " --help >/dev/null 2>&1") == 0;
+    return 0; // system(ZENITY_BINARY " --help >/dev/null 2>&1") == 0;
 }
 
 // Escape special characters in the given string so that they can be
@@ -339,7 +340,7 @@ static int ZenityErrorBox(char *message)
     M_snprintf(errorboxpath, errorboxpath_size, "%s --error --text=%s",
                ZENITY_BINARY, escaped_message);
 
-    result = system(errorboxpath);
+    result =  0; //system(errorboxpath);
 
     free(errorboxpath);
     free(escaped_message);
