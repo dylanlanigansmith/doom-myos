@@ -1569,7 +1569,7 @@ static void WI_loadUnloadData(load_callback_t callback)
     {
 	for (i=0 ; i<NUMMAPS ; i++)
 	{
-	    DEH_snprintf(name, 9, "WILV%d%d", wbs->epsd, i);
+	    DEH_snprintf(name, 9, "WILV%d%d", wbs->epsd, i); //FIXME DLS
             callback(name, &lnames[i]);
 	}
 
@@ -1593,7 +1593,9 @@ static void WI_loadUnloadData(load_callback_t callback)
 		    if (wbs->epsd != 1 || j != 8)
 		    {
 			// animations
-			DEH_snprintf(name, 9, "WIA%d%.2d%.2d", wbs->epsd, j, i);
+			//DEH_snprintf(name, 9, "WIA%d%.2d%.2d", wbs->epsd, j, i);
+
+				snprintf(name, 9, "WIA%d0%d0%d", wbs->epsd, j, i);
                         callback(name, &a->p[i]);
 		    }
 		    else

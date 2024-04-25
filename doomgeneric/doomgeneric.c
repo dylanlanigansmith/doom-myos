@@ -27,6 +27,7 @@ const int y_off = (FB_H - DOOMGENERIC_RESY) / 2;
 const size_t doom_pitch = DOOMGENERIC_RESX * 4ull;
 void DG_DrawFrame()
 {
+    if(!fb){ print("no frame buffer set?"); return; }
     // x_res: 640, y_res: 400, x_virtual: 640, y_virtual: 400, bpp: 32
     register int y;
     for(y = 0; y < (DOOMGENERIC_RESY + 0); ++y){
@@ -154,7 +155,7 @@ void DG_SleepMs(uint32_t ms)
     uint64_t msl = (uint64_t)ms;
     if(msl < 15){
         register uint64_t t =  sys_gettick();
-        while(sys_gettick() + msl < t){
+        while(sys_gettick() + msl < t){ //either we get scheduled during this or we dont but its a waste sleeping for 1ms with my 1000hz/10ms a slice scheduler
             __asm__ volatile ("nop; nop; nop; nop;");
         }
     } else{
@@ -173,7 +174,8 @@ uint32_t DG_GetTicksMs()
 
 //this is externed and used directly by our custom doom wad reading impl
 //lazy but it works
-void* mmwad = 0; //also i hardcoded the size lol
+void* mmwad = 0; //also i hardcoded the size lol, but it doesnt seem to matter bc i tried a few diff. WADs without remembering that i did and NBD.....
+                                                // my custom WAD class + how eager this game is when the WAD is mmaped probably dealt with it
 
 void doomgeneric_Create(int argc, char **argv)
 {
@@ -185,7 +187,7 @@ void doomgeneric_Create(int argc, char **argv)
 
 	DG_ScreenBuffer = malloc(DOOMGENERIC_RESX * DOOMGENERIC_RESY * 4);
 
-    fb = set_gfx_mode();
+    fb = 0;
 
     printf("created frame buffer %lx\n", fb);
 
@@ -206,8 +208,11 @@ void doomgeneric_Create(int argc, char **argv)
 
 void DG_SetWindowTitle(const char * title)
 {
-    //printf("DoomSetWindow: %s \n", title);
+    printf("DoomSetWindow: %s \n", title);
     //now we know we should be rendering!!!
+    sleep_ms(1000);
+    yield();
+    fb = set_gfx_mode();
 }
 
 void _start(){

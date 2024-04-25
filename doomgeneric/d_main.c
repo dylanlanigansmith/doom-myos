@@ -1179,7 +1179,7 @@ void D_DoomMain (void* wad)
     //I_AtExit(M_SaveDefaults, false);
 
     // Find main IWAD file and load it.
-    iwadfile = "DOOM.iwad";
+    iwadfile = "DOOM95.wad";
 
     // None found?
 
@@ -1395,7 +1395,7 @@ void D_DoomMain (void* wad)
 
     if (0)
     {
-	startepisode = 1 ; //myargv[p+1][0]-'0';
+	startepisode = 2 ; //myargv[p+1][0]-'0';
 	startmap = 1;
 	autostart = true;
     }

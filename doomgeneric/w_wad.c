@@ -340,6 +340,7 @@ int W_NEEDNumForName (char* name)
         
         for (lump_p = lumphash[hash]; lump_p != NULL; lump_p = lump_p->next)
         {
+           
             if (!strncasecmp(lump_p->name, name, 8))
             {
                 return lump_p - lumpinfo;
@@ -354,6 +355,7 @@ int W_NEEDNumForName (char* name)
         printf(" [fbNm %s ] ", name);
         for (i=numlumps-1; i >= 0; --i)
         {
+             printf("lump %s name %s \n", lumpinfo[i].name, name);
             if (!strncasecmp(lumpinfo[i].name, name, 8))
             {
                 return i;
