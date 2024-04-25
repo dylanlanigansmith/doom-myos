@@ -1393,9 +1393,9 @@ void D_DoomMain (void* wad)
 
     p = M_CheckParmWithArgs("-episode", 1);
 
-    if (p)
+    if (0)
     {
-	startepisode = myargv[p+1][0]-'0';
+	startepisode = 1 ; //myargv[p+1][0]-'0';
 	startmap = 1;
 	autostart = true;
     }

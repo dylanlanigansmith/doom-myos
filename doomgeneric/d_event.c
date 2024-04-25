@@ -36,6 +36,8 @@ void D_PostEvent (event_t* ev)
 {
     events[eventhead] = *ev;
     eventhead = (eventhead + 1) % MAXEVENTS;
+
+    //print("added event");
 }
 
 // Read an event from the queue.
