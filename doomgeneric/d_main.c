@@ -369,14 +369,17 @@ void D_BindVariables(void)
     M_BindVariable("show_endoom",            &show_endoom);
 
     // Multiplayer chat macros
-   
-    for (i=0; i<10; ++i)
-   {
-     char buf[12];
+    M_BindVariable("chatmacro0", &chat_macros[0]);
+    M_BindVariable("chatmacro1", &chat_macros[1]);
+    M_BindVariable("chatmacro2", &chat_macros[2]);
+    M_BindVariable("chatmacro3", &chat_macros[3]);
+    M_BindVariable("chatmacro4", &chat_macros[4]);
+    M_BindVariable("chatmacro5", &chat_macros[5]);
+    M_BindVariable("chatmacro6", &chat_macros[6]);
+    M_BindVariable("chatmacro7", &chat_macros[7]);
+    M_BindVariable("chatmacro8", &chat_macros[8]);
+    M_BindVariable("chatmacro9", &chat_macros[9]);
 
-       M_snprintf(buf, sizeof(buf), "chatmacro%i", i);
-     M_BindVariable(buf, &chat_macros[i]);
-    }
 
     print("Bound Variables\n");
 }
@@ -1179,7 +1182,7 @@ void D_DoomMain (void* wad)
     //I_AtExit(M_SaveDefaults, false);
 
     // Find main IWAD file and load it.
-    iwadfile = "DOOM95.wad";
+    iwadfile = "DOOM.WAD";
 
     // None found?
 

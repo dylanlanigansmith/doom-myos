@@ -5,7 +5,25 @@
 #include "doomgeneric.h"
 #include "inc.h"
 #include "doomkeys.h"
-
+const int sc_to_doom[128] =
+{
+    0  ,    27,     '1',    '2',    '3',    '4',    '5',    '6',
+    '7',    '8',    '9',    '0',    '-',    '=',    KEY_BACKSPACE, 9,
+    'q',    'w',    'e',    'r',    't',    'y',    'u',    'i',
+    'o',    'p',    '[',    ']',    13,		KEY_RCTRL, 'a',    's',
+    'd',    'f',    'g',    'h',    'j',    'k',    'l',    ';',
+    '\'',   '`',    KEY_RSHIFT,'\\',   'z',    'x',    'c',    'v',
+    'b',    'n',    'm',    ',',    '.',    '/',    KEY_RSHIFT,KEYP_MULTIPLY,
+    KEY_RALT,  ' ',  KEY_CAPSLOCK,KEY_F1,  KEY_F2,   KEY_F3,   KEY_F4,   KEY_F5,
+    KEY_F6,   KEY_F7,   KEY_F8,   KEY_F9,   KEY_F10,  /*KEY_NUMLOCK?*/KEY_PAUSE,KEY_SCRLCK,KEY_HOME,
+    KEY_UPARROW,KEY_PGUP,KEY_MINUS,KEY_LEFTARROW,KEYP_5,KEY_RIGHTARROW,KEYP_PLUS,KEY_END,
+    KEY_DOWNARROW,KEY_PGDN,KEY_INS,KEY_DEL,0,   0,      0,      KEY_F11,
+    KEY_F12,  0,      0,      0,      0,      0,      0,      0,
+    0,      0,      0,      0,      0,      0,      0,      0,
+    0,      0,      0,      0,      0,      0,      0,      0,
+    0,      0,      0,      0,      0,      0,      0,      0,
+    0,      0,      0,      0,      0,      0,      KEY_PRTSCR, 0
+};
 uint32_t* DG_ScreenBuffer = 0;
 
 void M_FindResponseFile(void);
@@ -27,7 +45,7 @@ const int y_off = (FB_H - DOOMGENERIC_RESY) / 2;
 const size_t doom_pitch = DOOMGENERIC_RESX * 4ull;
 void DG_DrawFrame()
 {
-    if(!fb){ print("no frame buffer set?"); return; }
+    if(!fb){ print("no frame buffer set?"); exit(1); }
     // x_res: 640, y_res: 400, x_virtual: 640, y_virtual: 400, bpp: 32
     register int y;
     for(y = 0; y < (DOOMGENERIC_RESY + 0); ++y){
@@ -64,15 +82,27 @@ void try_input()
         case PS2_KEY_S: //down
         case PS2_KEY_A: //left
         case PS2_KEY_D: //right
+        case PS2_KEY_Y:
+        case PS2_KEY_N:
+        case PS2_KEY_1:
+        case PS2_KEY_2:
+        case PS2_KEY_3:
+        case PS2_KEY_4:
         case PS2_KEY_SPACE:
         case PS2_KEY_LEFT_SHIFT:
         case PS2_KEY_LEFT_ALT:
         case PS2_KEY_ESCAPE:
         case PS2_KEY_ENTER:
         case PS2_KEY_BACKSPACE:
+        case PS2_KEY_F10:
             inqueue[kw++] = sc_raw;
-            kw %= INQUEUE_BUF;
+            kw %= INQUEUE_BUF; break;
         default:
+            if(sc < 128){
+                inqueue[kw++] = sc_raw;
+                kw %= INQUEUE_BUF;
+            }
+               
             return;
     }
 
@@ -112,8 +142,27 @@ int DG_GetKey(register int * pressed, register unsigned char * key){
             dk = KEY_ENTER; break;
         case PS2_KEY_BACKSPACE:
             dk = KEY_BACKSPACE; break;
+      /*  case PS2_KEY_Y:
+            dk = 'y'; break;
+        case PS2_KEY_N:
+            dk = 'n'; break;
+        case PS2_KEY_1:
+            dk = '1'; break;
+        case PS2_KEY_2:
+            dk = '2'; break;
+        case PS2_KEY_3:
+            dk = '3'; break;
+        case PS2_KEY_4:
+            dk = '4'; break;
+        case PS2_KEY_F10:
+            dk = KEY_F10; break;*/
         default:
-            dk = 0x0;
+            if(sc < 128){
+                dk = sc_to_doom[sc];
+                printf("got unknown key %i dk %i\n", sc, dk);
+                
+            }
+            else dk = 0x0;
     }
 
     if(dk == 0x0) return 0;
@@ -126,10 +175,9 @@ int DG_GetKey(register int * pressed, register unsigned char * key){
 
 
 
-
 int main(int argc, char** argv)
 {
-    
+    keyboard_togglemode();
     print("starting doomos!\n");
 	doomgeneric_Create(1, args);
 
@@ -138,7 +186,7 @@ int main(int argc, char** argv)
         doomgeneric_Tick();
     }
     print("quit doomos!\n");
-    return 0;
+
 }
 
 
@@ -176,13 +224,14 @@ uint32_t DG_GetTicksMs()
 //lazy but it works
 void* mmwad = 0; //also i hardcoded the size lol, but it doesnt seem to matter bc i tried a few diff. WADs without remembering that i did and NBD.....
                                                 // my custom WAD class + how eager this game is when the WAD is mmaped probably dealt with it
-
+bool gfx_up = False;
 void doomgeneric_Create(int argc, char **argv)
 {
 	// save arguments
     myargc = argc;
     myargv = argv;
     last_processed_input = 0;
+    gfx_up = 0;
 	M_FindResponseFile();
 
 	DG_ScreenBuffer = malloc(DOOMGENERIC_RESX * DOOMGENERIC_RESY * 4);
@@ -212,13 +261,14 @@ void DG_SetWindowTitle(const char * title)
     //now we know we should be rendering!!!
     sleep_ms(1000);
     yield();
-    fb = set_gfx_mode();
+   // gfx_up = True;
+    fb = 0; //set_gfx_mode();
 }
 
-void _start(){
+void DG_Exit(int err)
+{
+    if(gfx_up)
+        set_gfx_mode();
     keyboard_togglemode();
-	main(0,0); 
-    keyboard_togglemode();
-    set_gfx_mode();
-     exit(1);
+    exit(err);
 }

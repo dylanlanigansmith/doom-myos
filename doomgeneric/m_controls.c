@@ -379,11 +379,14 @@ void M_BindChatControls(unsigned int num_players)
 
     M_BindVariable("key_multi_msg",     &key_multi_msg);
 
-    for (i=0; i<num_players; ++i)
-    {
-        M_snprintf(name, sizeof(name), "key_multi_msgplayer%i", i + 1);
-        M_BindVariable(name, &key_multi_msgplayer[i]);
-    }
+    M_BindVariable("key_multi_msgplayer1", &key_multi_msgplayer[0]);
+
+     M_BindVariable("key_multi_msgplayer2", &key_multi_msgplayer[1]);
+
+    M_BindVariable("key_multi_msgplayer3", &key_multi_msgplayer[2]);
+    M_BindVariable("key_multi_msgplayer4", &key_multi_msgplayer[3]);
+
+   //this used to be a for loop but like our snprintf func is DANGERous
 }
 
 //

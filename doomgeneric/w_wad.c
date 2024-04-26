@@ -197,12 +197,12 @@ wad_file_t *W_AddFile (char *filename)
 
 			// ???modifiedgame = true;
 		}
-        printf("We got an IWAD !");
+        
 		header.numlumps = LONG(header.numlumps);
 		header.infotableofs = LONG(header.infotableofs);
 		length = header.numlumps*sizeof(filelump_t);
 		fileinfo = Z_Malloc(length, PU_STATIC, 0);
-
+        printf("We got an IWAD ! 0x%lx\n", (uintptr_t)fileinfo);
         W_Read(wad_file, header.infotableofs, fileinfo, length);
         newnumlumps += header.numlumps;
     }

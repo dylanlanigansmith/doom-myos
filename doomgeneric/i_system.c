@@ -36,7 +36,7 @@
 #endif
 
 #include "config.h"
-
+#include "doomgeneric.h"
 #include "deh_str.h"
 #include "doomtype.h"
 #include "m_argv.h"
@@ -259,7 +259,7 @@ void I_Quit (void)
         entry->func();
         entry = entry->next;
     }
-
+    DG_Exit(0);
 #if ORIGCODE
     SDL_Quit();
 
