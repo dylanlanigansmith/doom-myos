@@ -55,15 +55,15 @@ size_t W_dls_Read(wad_file_t *wad, unsigned int offset,
     // Jump to the specified position in the file.
 
     
-    register uintptr_t addr = (uintptr_t)(dls_wad->ptr) + (uintptr_t)(offset) ;
+    uintptr_t addr = (uintptr_t)(dls_wad->ptr) + (uintptr_t)(offset) ;
     size_t end = (uintptr_t)(dls_wad->ptr) + (uintptr_t)(dls_wad->wad.length) ;
-    register size_t red = (addr + buffer_len) > end ? (end - addr) : buffer_len;
-    printf("\nreading WAD %i (size %li) addr %lx, end %lx\n", offset, red, addr, end);
+    size_t red = (addr + buffer_len) > end ? (end - addr) : buffer_len;
+    printf("\nreading WAD [+%x] (size %li) addr %lx, end %lx ", offset, red, addr, end);
 
-        register void* buf =  buffer;
+    void* buf =  buffer;
     memcpy(buf, (void*)addr, red);
     // Read into the buffer.
-
+    printf("read WAD ... \n");
     
     return red;
 }

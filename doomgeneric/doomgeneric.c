@@ -5,6 +5,8 @@
 #include "doomgeneric.h"
 #include "inc.h"
 #include "doomkeys.h"
+#include "../../../../libd/graphics.h"
+
 const int sc_to_doom[128] =
 {
     0  ,    27,     '1',    '2',    '3',    '4',    '5',    '6',
@@ -32,27 +34,57 @@ void D_DoomMain (void*);
 char* args[] ={"doom",};
 
 void* fb = 0; //0xfc000000
-#define FB_W 1024
-#define FB_H 768
-#define PITCH 4096
+
+//extern gfx_info_t* gfxinfo;
+#define BYPP 4
+#define FB_W fbw//(uint32_t)gfxinfo->w
+#define FB_H fbh//(uint32_t)gfxinfo->h
+#define PITCH fbp//(uint32_t)gfxinfo->p
 //DOOMGENERIC_RESX * DOOMGENERIC_RESY
 
 void try_input();
+uint32_t doom_resx = 600;
+uint32_t  doom_resy = 400;
+
+int auto_res = 1; //2 == fullscreen 0 = low
 
 
-
-const int y_off = (FB_H - DOOMGENERIC_RESY) / 2;
-const size_t doom_pitch = DOOMGENERIC_RESX * 4ull;
 void DG_DrawFrame()
 {
-    if(!fb){ print("no frame buffer set?"); exit(1); }
+    static int y_off = 0;
+    static int x_off = 0;
+    static uint32_t fbw = 0;
+    static uint32_t fbh = 0;
+    static uint32_t fbp = 0;
+
+    static size_t doom_pitch = 4096;
+    if(!fb){ print("no frame buffer set?"); 
+        fb = set_gfx_mode();
+
+        gfx_info_t* gi = gfx_get_info();
+        fbw =  gi->w;
+        fbh = gi->h;
+        fbp = gi->p;
+        
+        doom_pitch = DOOMGENERIC_RESX * BYPP;
+
+        y_off = (FB_H - DOOMGENERIC_RESY) / 2;
+        x_off = (fbp - doom_pitch) / 2;
+        if(x_off % 64) x_off = x_off - (x_off % 64);
+        if(x_off < 0) x_off = 0;
+
+        if(!fb)
+            exit(1); 
+    }
+
+     
     // x_res: 640, y_res: 400, x_virtual: 640, y_virtual: 400, bpp: 32
     register int y;
     for(y = 0; y < (DOOMGENERIC_RESY + 0); ++y){
         
-        register uintptr_t addr = (uintptr_t)fb + ( (y + y_off) * PITCH);
+        register uintptr_t addr = (uintptr_t)fb + ( (y + y_off) * PITCH) + x_off;
         register uintptr_t offset = (uintptr_t)DG_ScreenBuffer + (y * doom_pitch);
-        memcpy(addr, offset, doom_pitch);
+        memcpy_fastnfurious(addr, offset, doom_pitch);
     }
 
     try_input();
@@ -159,7 +191,7 @@ int DG_GetKey(register int * pressed, register unsigned char * key){
         default:
             if(sc < 128){
                 dk = sc_to_doom[sc];
-                printf("got unknown key %i dk %i\n", sc, dk);
+               // printf("got unknown key %i dk %i\n", sc, dk);
                 
             }
             else dk = 0x0;
@@ -177,8 +209,43 @@ int DG_GetKey(register int * pressed, register unsigned char * key){
 
 int main(int argc, char** argv)
 {
+    doom_resx = 600;
+    doom_resy = 400;
     keyboard_togglemode();
-    print("starting doomos!\n");
+    print("starting doomos!");
+    gfx_info_t* gi = gfx_get_info();
+
+    if(!gi) print("we got major gfx issues");
+    uint32_t h = (uint32_t)(gi->h);
+    if(h > doom_resy && auto_res){
+        //we can go up a res
+        if(h >= 768){
+            doom_resx = 1024;
+            doom_resy = 640;
+        } if(h >= 1050){
+            doom_resx = 1280;
+            doom_resy = 960;
+        } if(h >= 1200){
+            doom_resx = 1050;
+            doom_resy = 1400;
+        }
+        if(h >= 1440){
+            doom_resx = 1600;
+            doom_resy = 1200;
+        }
+        if(auto_res == 2 && h >= 1440){
+            doom_resx = 1920;
+            doom_resy = 1440;
+        }
+    }
+    //game auto sets scaling
+    //would be nice to have mode with it at low res in corner and stdout still running
+
+
+    printf("using gfx mode (%ix%ix%i) \n", doom_resx, doom_resy, gi->bpp);
+
+
+
 	doomgeneric_Create(1, args);
 
     while (1)
@@ -261,7 +328,7 @@ void DG_SetWindowTitle(const char * title)
     //now we know we should be rendering!!!
     sleep_ms(1000);
     yield();
-   // gfx_up = True;
+    gfx_up = True;
     fb = 0; //set_gfx_mode();
 }
 

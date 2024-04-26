@@ -3,9 +3,9 @@
 
 #include "inc.h"
 
-#define DOOMGENERIC_RESX 1024//640
-#define DOOMGENERIC_RESY 640//400
-
+#define DOOMGENERIC_RESX doom_resx//640 1024
+#define DOOMGENERIC_RESY doom_resy//400 640
+extern uint32_t doom_resx, doom_resy;
 
 extern uint32_t* DG_ScreenBuffer;
 
@@ -13,7 +13,7 @@ void doomgeneric_Create(int argc, char **argv);
 void doomgeneric_Tick();
 
 
-#define WADMAP_LEN 12408292
+#define WADMAP_LEN 12408292 
 extern void* mmwad;
 //Implement below functions for your platform
 void DG_Init();

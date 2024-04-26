@@ -49,7 +49,7 @@ void M_MakeDirectory(char *path)
 #ifdef _WIN32
     mkdir(path);
 #else
-    mkdir(path, 0755);
+   // mkdir(path, 0755);
 #endif
 }
 
@@ -57,7 +57,9 @@ void M_MakeDirectory(char *path)
 
 boolean M_FileExists(char *filename)
 {
-    FILE *fstream;
+
+    return 0;
+  /*  FILE *fstream;
 
     fstream = fopen(filename, "r");
 
@@ -72,7 +74,7 @@ boolean M_FileExists(char *filename)
         // "file" exists at least!
 
         return errno == EISDIR;
-    }
+    }*/
 }
 
 //
